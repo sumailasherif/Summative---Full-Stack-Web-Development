@@ -10,6 +10,7 @@ async function getAllCustomers(req, res) {
   }
 }
 
+
 // GET /api/customers/:id
 async function getCustomerById(req, res) {
   try {
