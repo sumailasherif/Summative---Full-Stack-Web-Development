@@ -5,9 +5,8 @@ const swaggerSpec = require('./swagger/swagger');
 
 const customerRoutes = require('./routes/customerRoutes');
 const vehicleRoutes = require('./routes/vehicleRoutes');
-// const rentalRoutes = require('./routes/rentalRoutes'); for sherif
-// const dashboardRoutes = require('./routes/dashboardRoutes'); for sherif
-
+const rentalRoutes = require('./routes/rentalRoutes');
+const dashboardRoutes = require('./routes/dashboardRoutes');
 const app = express();
 const PORT = process.env.PORT || 3000;
 
@@ -18,8 +17,8 @@ app.use('/api-docs', swaggerUi.serve, swaggerUi.setup(swaggerSpec));
 
 app.use('/api/customers', customerRoutes);
 app.use('/api/vehicles', vehicleRoutes);
-// app.use('/api/rentals', rentalRoutes);for sherif
-// app.use('/api/dashboard', dashboardRoutes);for sherif
+app.use('/api/rentals', rentalRoutes);
+app.use('/api/dashboard', dashboardRoutes);
 
 app.get('/', (req, res) => {
   res.send('Vehicle Rental Management System API is running');
