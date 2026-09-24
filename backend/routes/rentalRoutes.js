@@ -166,3 +166,5 @@ router.put('/:id', rentalController.updateRental);
  *         description: Server error
  */
 router.delete('/:id', rentalController.deleteRental);
+
+module.exports = router;
