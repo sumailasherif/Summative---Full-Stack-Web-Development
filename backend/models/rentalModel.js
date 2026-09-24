@@ -40,3 +40,22 @@ async function updateRental(rentalId, rentalData) {
 
   return result.affectedRows > 0;
 }
+
+
+// Delete a rental
+async function deleteRental(rentalId) {
+  const [result] = await db.query(
+    'DELETE FROM rentals WHERE rental_id = ?',
+    [rentalId]
+  );
+
+  return result.affectedRows > 0;
+}
+
+module.exports = {
+  getAllRentals,
+  getRentalById,
+  createRental,
+  updateRental,
+  deleteRental,
+};
