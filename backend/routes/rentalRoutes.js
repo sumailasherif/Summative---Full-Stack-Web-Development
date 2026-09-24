@@ -91,3 +91,78 @@ router.get('/:id', rentalController.getRentalById);
  *         description: Server error
  */
 router.post('/', rentalController.createRental);
+
+/**
+ * @swagger
+ * /api/rentals/{id}:
+ *   put:
+ *     summary: Update an existing rental
+ *     tags: [Rentals]
+ *     parameters:
+ *       - in: path
+ *         name: id
+ *         required: true
+ *         schema:
+ *           type: integer
+ *         description: The rental's ID
+ *     requestBody:
+ *       required: true
+ *       content:
+ *         application/json:
+ *           schema:
+ *             type: object
+ *             required:
+ *               - customer_id
+ *               - vehicle_id
+ *               - start_date
+ *               - end_date
+ *             properties:
+ *               customer_id:
+ *                 type: string
+ *                 example: CID-0001
+ *               vehicle_id:
+ *                 type: string
+ *                 example: VID-0001
+ *               start_date:
+ *                 type: string
+ *                 format: date
+ *               end_date:
+ *                 type: string
+ *                 format: date
+ *               status:
+ *                 type: string
+ *                 example: active
+ *     responses:
+ *       200:
+ *         description: Rental updated successfully
+ *       400:
+ *         description: Missing required fields, or end_date is not after start_date
+ *       404:
+ *         description: Rental, customer, or vehicle not found
+ *       500:
+ *         description: Server error
+ */
+router.put('/:id', rentalController.updateRental);
+
+/**
+ * @swagger
+ * /api/rentals/{id}:
+ *   delete:
+ *     summary: Delete a rental
+ *     tags: [Rentals]
+ *     parameters:
+ *       - in: path
+ *         name: id
+ *         required: true
+ *         schema:
+ *           type: integer
+ *         description: The rental's ID
+ *     responses:
+ *       200:
+ *         description: Rental deleted successfully
+ *       404:
+ *         description: Rental not found
+ *       500:
+ *         description: Server error
+ */
+router.delete('/:id', rentalController.deleteRental);
