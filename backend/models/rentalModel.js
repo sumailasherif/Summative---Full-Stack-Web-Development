@@ -28,3 +28,15 @@ async function createRental(rentalData) {
   // rental_id is auto-increment, so MySQL hands the new ID back as result.insertId
   return { rental_id: result.insertId, customer_id, vehicle_id, start_date, end_date, total_price, status };
 }
+
+//This helps to update an existing rental record
+async function updateRental(rentalId, rentalData) {
+  const { customer_id, vehicle_id, start_date, end_date, total_price, status } = rentalData;
+
+  const [result] = await db.query(
+    'UPDATE rentals SET customer_id = ?, vehicle_id = ?, start_date = ?, end_date = ?, total_price = ?, status = ? WHERE rental_id = ?',
+    [customer_id, vehicle_id, start_date, end_date, total_price, status, rentalId]
+  );
+
+  return result.affectedRows > 0;
+}
