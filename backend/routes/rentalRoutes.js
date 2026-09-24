@@ -23,7 +23,7 @@ const rentalController = require('../controllers/rentalController');
  */
  router.get('/', rentalController.getAllRentals);
 
- * /**
+ /**
  * @swagger
  * /api/rentals/{id}:
  *   get:
