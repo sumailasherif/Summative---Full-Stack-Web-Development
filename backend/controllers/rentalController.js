@@ -91,3 +91,49 @@ async function createRental(req, res) {
     res.status(500).json({ message: 'Error creating rental', error: error.message });
   }
 }
+
+// PUT /api/rentals/:id - update the rental and re-price it in case dates changed
+async function updateRental(req, res) {
+  try {
+    const { customer_id, vehicle_id, start_date, end_date, status } = req.body;
+
+    if (!customer_id || !vehicle_id || !start_date || !end_date) {
+      return res.status(400).json({ message: 'customer_id, vehicle_id, start_date and end_date are all required' });
+    }
+
+    const customer = await customerModel.getCustomerById(customer_id);
+    if (!customer) {
+      return res.status(404).json({ message: 'Customer not found' });
+    }
+
+    const vehicle = await vehicleModel.getVehicleById(vehicle_id);
+    if (!vehicle) {
+      return res.status(404).json({ message: 'Vehicle not found' });
+    }
+
+    const start = new Date(start_date);
+    const end = new Date(end_date);
+ if (end <= start) {
+      return res.status(400).json({ message: 'end_date must be after start_date' });
+    }
+
+    const days = Math.ceil((end - start) / (1000 * 60 * 60 * 24));
+    const total_price = days * Number(vehicle.daily_rate);
+
+    const updated = await rentalModel.updateRental(req.params.id, {
+      customer_id,
+      vehicle_id,
+      start_date,
+      end_date,
+      total_price,
+      status: status || 'booked',
+    });
+     if (!updated) {
+      return res.status(404).json({ message: 'Rental not found' });
+    }
+
+    res.status(200).json({ message: 'Rental updated successfully' });
+  } catch (error) {
+    res.status(500).json({ message: 'Error updating rental', error: error.message });
+  }
+}
