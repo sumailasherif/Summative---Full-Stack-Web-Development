@@ -21,5 +21,27 @@ const rentalController = require('../controllers/rentalController');
  *       500:
  *         description: Server error
  */
+ router.get('/', rentalController.getAllRentals);
+
+ * /**
+ * @swagger
+ * /api/rentals/{id}:
+ *   get:
+ *     summary: Get a single rental by ID
+ *     tags: [Rentals]
+ *     parameters:
+ *       - in: path
+ *         name: id
+ *         required: true
+ *         schema:
+ *           type: integer
+ *         description: The rental's ID
+ *     responses:
+ *       200:
+ *         description: The matching rental
+ *       404:
+ *         description: Rental not found
+ *       500:
+ *         description: Server error
  */
-router.get('/', rentalController.getAllRentals);
+router.get('/:id', rentalController.getRentalById);
