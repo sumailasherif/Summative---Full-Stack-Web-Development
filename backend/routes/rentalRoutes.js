@@ -45,3 +45,49 @@ const rentalController = require('../controllers/rentalController');
  *         description: Server error
  */
 router.get('/:id', rentalController.getRentalById);
+
+
+/**
+ * @swagger
+ * /api/rentals:
+ *   post:
+ *     summary: Create a new rental
+ *     tags: [Rentals]
+ *     requestBody:
+ *       required: true
+ *       content:
+ *         application/json:
+ *           schema:
+ *             type: object
+ *             required:
+ *               - customer_id
+ *               - vehicle_id
+ *               - start_date
+ *               - end_date
+ *             properties:
+ *               customer_id:
+ *                 type: string
+ *                 example: CID-0001
+ *               vehicle_id:
+ *                 type: string
+ *                 example: VID-0001
+ *               start_date:
+ *                 type: string
+ *                 format: date
+ *               end_date:
+ *                 type: string
+ *                 format: date
+ *               status:
+ *                 type: string
+ *                 example: booked
+ *     responses:
+ *       201:
+ *         description: Rental created successfully (total_price is calculated automatically)
+ *       400:
+ *         description: Missing required fields, or end_date is not after start_date
+ *       404:
+ *         description: Customer or vehicle not found
+ *       500:
+ *         description: Server error
+ */
+router.post('/', rentalController.createRental);
