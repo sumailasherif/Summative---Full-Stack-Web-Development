@@ -32,4 +32,5 @@ async function createRental(req, res) {
 
     if (!customer_id || !vehicle_id || !start_date || !end_date) {
       return res.status(400).json({ message: 'customer_id, vehicle_id, start_date and end_date are all required' });
-    }
+      }
+                                      
