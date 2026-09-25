@@ -2,7 +2,7 @@ const rentalModel = require('../models/rentalModel');
 const customerModel = require('../models/customerModel');
 const vehicleModel = require('../models/vehicleModel');
 
-// GET /api/rentals
+// GET /api/rentals - grab every rental we've got on file
 async function getAllRentals(req, res) {
   try {
     const rentals = await rentalModel.getAllRentals();
@@ -25,29 +25,7 @@ async function getRentalById(req, res) {
   }
 }
 
-// POST /api/rentals, this checks the customer & vehicle are real, then books it in
-async function createRental(req, res) {
-  try {
-    const { customer_id, vehicle_id, start_date, end_date, status } = req.body;
-
-    if (!customer_id || !vehicle_id || !start_date || !end_date) {
-      return res.status(400).json({ message: 'customer_id, vehicle_id, start_date and end_date are all required' });
-      }
-    }
-
-async function getRentalById(req, res) {
-  try {
-    const rental = await rentalModel.getRentalById(req.params.id);
-    if (!rental) {
-      return res.status(404).json({ message: 'Rental not found' });
-    }
-    res.status(200).json(rental);
-  } catch (error) {
-    res.status(500).json({ message: 'Error retrieving rental', error: error.message });
-  }
-}   
-
-// POST /api/rentals - checks whether the customer & vehicle are real, then book it in
+// POST /api/rentals - check the customer & vehicle are real, then book it in
 async function createRental(req, res) {
   try {
     const { customer_id, vehicle_id, start_date, end_date, status } = req.body;
@@ -56,7 +34,7 @@ async function createRental(req, res) {
       return res.status(400).json({ message: 'customer_id, vehicle_id, start_date and end_date are all required' });
     }
 
-    // This checks so there is no booking a rental for a customer or vehicle that doesn't exist
+    // no point booking a rental for a customer or vehicle that doesn't exist
     const customer = await customerModel.getCustomerById(customer_id);
     if (!customer) {
       return res.status(404).json({ message: 'Customer not found' });
@@ -73,6 +51,7 @@ async function createRental(req, res) {
     if (end <= start) {
       return res.status(400).json({ message: 'end_date must be after start_date' });
     }
+    
  // this helps us to work out the number of days, then price it off the vehicle's daily_rate
     const days = Math.ceil((end - start) / (1000 * 60 * 60 * 24));
     const total_price = days * Number(vehicle.daily_rate);
@@ -137,3 +116,26 @@ async function updateRental(req, res) {
     res.status(500).json({ message: 'Error updating rental', error: error.message });
   }
 }
+
+// DELETE /api/rentals/:id - rental's done, wipe it
+async function deleteRental(req, res) {
+  try {
+    const deleted = await rentalModel.deleteRental(req.params.id);
+
+    if (!deleted) {
+      return res.status(404).json({ message: 'Rental not found' });
+    }
+
+    res.status(200).json({ message: 'Rental deleted successfully' });
+  } catch (error) {
+    res.status(500).json({ message: 'Error deleting rental', error: error.message });
+  }
+}
+
+module.exports = {
+  getAllRentals,
+  getRentalById,
+  createRental,
+  updateRental,
+  deleteRental,
+};
