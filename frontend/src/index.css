@@ -138,3 +138,32 @@ tbody button:last-child:hover {
   border-radius: 6px;
   font-size: 0.9rem;
 }
+
+.dashboard-stats {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(160px, 1fr));
+  gap: 16px;
+  margin-bottom: 24px;
+}
+
+.stat-card {
+  background: #ffffff;
+  border: 1px solid #e2e8f0;
+  border-radius: 10px;
+  padding: 20px;
+  text-align: center;
+}
+
+.stat-card h2 {
+  font-size: 2rem;
+  margin: 0 0 4px;
+  color: #2563eb;
+}
+
+.stat-card p {
+  margin: 0;
+  color: #475569;
+  font-size: 0.85rem;
+  text-transform: uppercase;
+  letter-spacing: 0.04em;
+}
