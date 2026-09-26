@@ -111,59 +111,6 @@ export async function deleteVehicle(id) {
 }
 // ---------- Rentals ----------
 
-export async function getRentals() {
-  const response = await fetch(`${BASE_URL}/rentals`);
-  if (!response.ok) {
-    throw new Error('Failed to fetch rentals');
-  }
-  return response.json();
-}
-
-export async function getRentalById(id) {
-  const response = await fetch(`${BASE_URL}/rentals/${id}`);
-  if (!response.ok) {
-    throw new Error('Failed to fetch rental');
-  }
-  return response.json();
-}
-
-export async function createRental(rentalData) {
-  const response = await fetch(`${BASE_URL}/rentals`, {
-    method: 'POST',
-    headers: { 'Content-Type': 'application/json' },
-    body: JSON.stringify(rentalData),
-  });
-  if (!response.ok) {
-    const error = await response.json();
-    throw new Error(error.message || 'Failed to create rental');
-  }
-  return response.json();
-}
-
-export async function updateRental(id, rentalData) {
-  const response = await fetch(`${BASE_URL}/rentals/${id}`, {
-    method: 'PUT',
-    headers: { 'Content-Type': 'application/json' },
-    body: JSON.stringify(rentalData),
-  });
-  if (!response.ok) {
-    const error = await response.json();
-    throw new Error(error.message || 'Failed to update rental');
-  }
-  return response.json();
-}
-
-export async function deleteRental(id) {
-  const response = await fetch(`${BASE_URL}/rentals/${id}`, {
-    method: 'DELETE',
-  });
-  if (!response.ok) {
-    const error = await response.json();
-    throw new Error(error.message || 'Failed to delete rental');
-  }
-  return response.json();
-}
-
 // ---------- Dashboard ----------
 
 export async function getDashboardStats() {
