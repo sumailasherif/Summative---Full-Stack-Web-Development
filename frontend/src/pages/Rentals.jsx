@@ -147,7 +147,7 @@ function Rentals() {
                   <td>{rental.vehicle_id}</td>
                   <td>{rental.start_date ? rental.start_date.slice(0, 10) : ''}</td>
                   <td>{rental.end_date ? rental.end_date.slice(0, 10) : ''}</td>
-                  <td>{rental.total_price}</td>
+                  <td>${Number(rental.total_price).toFixed(2)}</td>
                   <td><span className={`badge badge-${rental.status}`}>{rental.status}</span></td>
                   <td>
                     <Link to={`/rentals/${rental.rental_id}`}>View</Link>{' '}
