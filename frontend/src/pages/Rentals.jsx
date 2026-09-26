@@ -91,7 +91,10 @@ function Rentals() {
 
   return (
     <div className="rentals-page">
-      <h1>Rentals</h1>
+      <div className="page-header">
+        <h1>Rentals</h1>
+        <p>Track bookings across customers and vehicles</p>
+      </div>
 
       {message && (
         <p className={message.type === 'success' ? 'message-success' : 'message-error'}>
@@ -99,60 +102,64 @@ function Rentals() {
         </p>
       )}
 
-      <form onSubmit={handleSubmit}>
-        <input type="text" name="customer_id" placeholder="Customer ID (e.g. CID-0001)" value={formData.customer_id} onChange={handleChange} />
-        <input type="text" name="vehicle_id" placeholder="Vehicle ID (e.g. VID-0001)" value={formData.vehicle_id} onChange={handleChange} />
-        <input type="date" name="start_date" value={formData.start_date} onChange={handleChange} />
-        <input type="date" name="end_date" value={formData.end_date} onChange={handleChange} />
-        <select name="status" value={formData.status} onChange={handleChange}>
-          <option value="booked">Booked</option>
-          <option value="active">Active</option>
-          <option value="completed">Completed</option>
-        </select>
-        <button type="submit">{editingId ? 'Update Rental' : 'Add Rental'}</button>
-        {editingId && (
-          <button type="button" onClick={resetForm}>
-            Cancel
-          </button>
-        )}
-      </form>
+      <div className="card">
+        <form onSubmit={handleSubmit}>
+          <input type="text" name="customer_id" placeholder="Customer ID (e.g. CID-0001)" value={formData.customer_id} onChange={handleChange} />
+          <input type="text" name="vehicle_id" placeholder="Vehicle ID (e.g. VID-0001)" value={formData.vehicle_id} onChange={handleChange} />
+          <input type="date" name="start_date" value={formData.start_date} onChange={handleChange} />
+          <input type="date" name="end_date" value={formData.end_date} onChange={handleChange} />
+          <select name="status" value={formData.status} onChange={handleChange}>
+            <option value="booked">Booked</option>
+            <option value="active">Active</option>
+            <option value="completed">Completed</option>
+          </select>
+          <button type="submit">{editingId ? 'Update Rental' : 'Add Rental'}</button>
+          {editingId && (
+            <button type="button" onClick={resetForm}>
+              Cancel
+            </button>
+          )}
+        </form>
+      </div>
 
-      {loading ? (
-        <p>Loading rentals...</p>
-      ) : (
-        <table>
-          <thead>
-            <tr>
-              <th>ID</th>
-              <th>Customer</th>
-              <th>Vehicle</th>
-              <th>Start</th>
-              <th>End</th>
-              <th>Total Price</th>
-              <th>Status</th>
-              <th>Actions</th>
-            </tr>
-          </thead>
-          <tbody>
-            {rentals.map((rental) => (
-              <tr key={rental.rental_id}>
-                <td>{rental.rental_id}</td>
-                <td>{rental.customer_id}</td>
-                <td>{rental.vehicle_id}</td>
-                <td>{rental.start_date ? rental.start_date.slice(0, 10) : ''}</td>
-                <td>{rental.end_date ? rental.end_date.slice(0, 10) : ''}</td>
-                <td>{rental.total_price}</td>
-                <td>{rental.status}</td>
-                <td>
-                  <Link to={`/rentals/${rental.rental_id}`}>View</Link>{' '}
-                  <button onClick={() => handleEdit(rental)}>Edit</button>
-                  <button onClick={() => handleDelete(rental.rental_id)}>Delete</button>
-                </td>
+      <div className="card">
+        {loading ? (
+          <p>Loading rentals...</p>
+        ) : (
+          <table>
+            <thead>
+              <tr>
+                <th>ID</th>
+                <th>Customer</th>
+                <th>Vehicle</th>
+                <th>Start</th>
+                <th>End</th>
+                <th>Total Price</th>
+                <th>Status</th>
+                <th>Actions</th>
               </tr>
-            ))}
-          </tbody>
-        </table>
-      )}
+            </thead>
+            <tbody>
+              {rentals.map((rental) => (
+                <tr key={rental.rental_id}>
+                  <td>{rental.rental_id}</td>
+                  <td>{rental.customer_id}</td>
+                  <td>{rental.vehicle_id}</td>
+                  <td>{rental.start_date ? rental.start_date.slice(0, 10) : ''}</td>
+                  <td>{rental.end_date ? rental.end_date.slice(0, 10) : ''}</td>
+                  <td>{rental.total_price}</td>
+                  <td><span className={`badge badge-${rental.status}`}>{rental.status}</span></td>
+                  <td>
+                    <Link to={`/rentals/${rental.rental_id}`}>View</Link>{' '}
+                    <button onClick={() => handleEdit(rental)}>Edit</button>
+                    <button onClick={() => handleDelete(rental.rental_id)}>Delete</button>
+                  </td>
+                </tr>
+              ))}
+            </tbody>
+          </table>
+        )}
+      </div>
     </div>
   );
 }

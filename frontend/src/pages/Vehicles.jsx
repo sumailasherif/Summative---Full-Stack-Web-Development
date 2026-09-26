@@ -92,7 +92,10 @@ function Vehicles() {
 
   return (
     <div className="vehicles-page">
-      <h1>Vehicles</h1>
+      <div className="page-header">
+        <h1>Vehicles</h1>
+        <p>Manage your fleet</p>
+      </div>
 
       {message && (
         <p className={message.type === 'success' ? 'message-success' : 'message-error'}>
@@ -100,57 +103,61 @@ function Vehicles() {
         </p>
       )}
 
-      <form onSubmit={handleSubmit}>
-        <input type="text" name="brand" placeholder="Brand" value={formData.brand} onChange={handleChange} />
-        <input type="text" name="model" placeholder="Model" value={formData.model} onChange={handleChange} />
-        <input type="text" name="registration_number" placeholder="Registration Number" value={formData.registration_number} onChange={handleChange} />
-        <input type="number" name="daily_rate" placeholder="Daily Rate" value={formData.daily_rate} onChange={handleChange} />
-        <select name="status" value={formData.status} onChange={handleChange}>
-          <option value="available">Available</option>
-          <option value="rented">Rented</option>
-          <option value="maintenance">Maintenance</option>
-        </select>
-        <button type="submit">{editingId ? 'Update Vehicle' : 'Add Vehicle'}</button>
-        {editingId && (
-          <button type="button" onClick={resetForm}>
-            Cancel
-          </button>
-        )}
-      </form>
+      <div className="card">
+        <form onSubmit={handleSubmit}>
+          <input type="text" name="brand" placeholder="Brand" value={formData.brand} onChange={handleChange} />
+          <input type="text" name="model" placeholder="Model" value={formData.model} onChange={handleChange} />
+          <input type="text" name="registration_number" placeholder="Registration Number" value={formData.registration_number} onChange={handleChange} />
+          <input type="number" name="daily_rate" placeholder="Daily Rate" value={formData.daily_rate} onChange={handleChange} />
+          <select name="status" value={formData.status} onChange={handleChange}>
+            <option value="available">Available</option>
+            <option value="rented">Rented</option>
+            <option value="maintenance">Maintenance</option>
+          </select>
+          <button type="submit">{editingId ? 'Update Vehicle' : 'Add Vehicle'}</button>
+          {editingId && (
+            <button type="button" onClick={resetForm}>
+              Cancel
+            </button>
+          )}
+        </form>
+      </div>
 
-      {loading ? (
-        <p>Loading vehicles...</p>
-      ) : (
-        <table>
-          <thead>
-            <tr>
-              <th>ID</th>
-              <th>Brand</th>
-              <th>Model</th>
-              <th>Registration</th>
-              <th>Daily Rate</th>
-              <th>Status</th>
-              <th>Actions</th>
-            </tr>
-          </thead>
-          <tbody>
-            {vehicles.map((vehicle) => (
-              <tr key={vehicle.vehicle_id}>
-                <td>{vehicle.vehicle_id}</td>
-                <td>{vehicle.brand}</td>
-                <td>{vehicle.model}</td>
-                <td>{vehicle.registration_number}</td>
-                <td>{vehicle.daily_rate}</td>
-                <td>{vehicle.status}</td>
-                <td>
-                  <button onClick={() => handleEdit(vehicle)}>Edit</button>
-                  <button onClick={() => handleDelete(vehicle.vehicle_id)}>Delete</button>
-                </td>
+      <div className="card">
+        {loading ? (
+          <p>Loading vehicles...</p>
+        ) : (
+          <table>
+            <thead>
+              <tr>
+                <th>ID</th>
+                <th>Brand</th>
+                <th>Model</th>
+                <th>Registration</th>
+                <th>Daily Rate</th>
+                <th>Status</th>
+                <th>Actions</th>
               </tr>
-            ))}
-          </tbody>
-        </table>
-      )}
+            </thead>
+            <tbody>
+              {vehicles.map((vehicle) => (
+                <tr key={vehicle.vehicle_id}>
+                  <td>{vehicle.vehicle_id}</td>
+                  <td>{vehicle.brand}</td>
+                  <td>{vehicle.model}</td>
+                  <td>{vehicle.registration_number}</td>
+                  <td>{vehicle.daily_rate}</td>
+                  <td><span className={`badge badge-${vehicle.status}`}>{vehicle.status}</span></td>
+                  <td>
+                    <button onClick={() => handleEdit(vehicle)}>Edit</button>
+                    <button onClick={() => handleDelete(vehicle.vehicle_id)}>Delete</button>
+                  </td>
+                </tr>
+              ))}
+            </tbody>
+          </table>
+        )}
+      </div>
     </div>
   );
 }

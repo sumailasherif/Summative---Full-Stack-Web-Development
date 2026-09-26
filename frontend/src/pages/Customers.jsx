@@ -83,58 +83,65 @@ function Customers() {
 
   return (
     <div className="customers-page">
-      <h1>Customers</h1>
+  <div className="page-header">
+    <h1>Customers</h1>
+    <p>Manage your customer records</p>
+  </div>
 
-      {message && (
+  {message && (
         <p className={message.type === 'success' ? 'message-success' : 'message-error'}>
           {message.text}
         </p>
       )}
 
-      <form onSubmit={handleSubmit}>
-        <input type="text" name="name" placeholder="Name" value={formData.name} onChange={handleChange} />
-        <input type="email" name="email" placeholder="Email" value={formData.email} onChange={handleChange} />
-        <input type="text" name="phone" placeholder="Phone" value={formData.phone} onChange={handleChange} />
-        <input type="text" name="driving_license" placeholder="Driving License" value={formData.driving_license} onChange={handleChange} />
-        <button type="submit">{editingId ? 'Update Customer' : 'Add Customer'}</button>
-        {editingId && (
-          <button type="button" onClick={resetForm}>
-            Cancel
-          </button>
-        )}
-      </form>
+      <div className="card">
+        <form onSubmit={handleSubmit}>
+          <input type="text" name="name" placeholder="Name" value={formData.name} onChange={handleChange} />
+          <input type="email" name="email" placeholder="Email" value={formData.email} onChange={handleChange} />
+          <input type="text" name="phone" placeholder="Phone" value={formData.phone} onChange={handleChange} />
+          <input type="text" name="driving_license" placeholder="Driving License" value={formData.driving_license} onChange={handleChange} />
+          <button type="submit">{editingId ? 'Update Customer' : 'Add Customer'}</button>
+          {editingId && (
+            <button type="button" onClick={resetForm}>
+              Cancel
+            </button>
+          )}
+        </form>
+      </div>
 
-      {loading ? (
-        <p>Loading customers...</p>
-      ) : (
-        <table>
-          <thead>
-            <tr>
-              <th>ID</th>
-              <th>Name</th>
-              <th>Email</th>
-              <th>Phone</th>
-              <th>Driving License</th>
-              <th>Actions</th>
-            </tr>
-          </thead>
-          <tbody>
-            {customers.map((customer) => (
-              <tr key={customer.customer_id}>
-                <td>{customer.customer_id}</td>
-                <td>{customer.name}</td>
-                <td>{customer.email}</td>
-                <td>{customer.phone}</td>
-                <td>{customer.driving_license}</td>
-                <td>
-                  <button onClick={() => handleEdit(customer)}>Edit</button>
-                  <button onClick={() => handleDelete(customer.customer_id)}>Delete</button>
-                </td>
+      <div className="card">
+        {loading ? (
+          <p>Loading customers...</p>
+        ) : (
+          <table>
+            <thead>
+              <tr>
+                <th>ID</th>
+                <th>Name</th>
+                <th>Email</th>
+                <th>Phone</th>
+                <th>Driving License</th>
+                <th>Actions</th>
               </tr>
-            ))}
-          </tbody>
-        </table>
-      )}
+            </thead>
+            <tbody>
+              {customers.map((customer) => (
+                <tr key={customer.customer_id}>
+                  <td>{customer.customer_id}</td>
+                  <td>{customer.name}</td>
+                  <td>{customer.email}</td>
+                  <td>{customer.phone}</td>
+                  <td>{customer.driving_license}</td>
+                  <td>
+                    <button onClick={() => handleEdit(customer)}>Edit</button>
+                    <button onClick={() => handleDelete(customer.customer_id)}>Delete</button>
+                  </td>
+                </tr>
+              ))}
+            </tbody>
+          </table>
+        )}
+      </div>
     </div>
   );
 }

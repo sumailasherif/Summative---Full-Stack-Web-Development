@@ -49,33 +49,41 @@ function RentalDetails() {
 
   return (
     <div className="rental-details-page">
-      <h1>Rental #{rental.rental_id}</h1>
+      <div className="page-header">
+        <h1>Rental #{rental.rental_id}</h1>
+      </div>
 
-      <h2>Rental Info</h2>
-      <p>Start date: {rental.start_date ? rental.start_date.slice(0, 10) : ''}</p>
-      <p>End date: {rental.end_date ? rental.end_date.slice(0, 10) : ''}</p>
-      <p>Total price: {rental.total_price}</p>
-      <p>Status: {rental.status}</p>
+      <div className="card">
+        <h2>Rental Info</h2>
+        <p>Start date: {rental.start_date ? rental.start_date.slice(0, 10) : ''}</p>
+        <p>End date: {rental.end_date ? rental.end_date.slice(0, 10) : ''}</p>
+        <p>Total price: {rental.total_price}</p>
+        <p>Status: <span className={`badge badge-${rental.status}`}>{rental.status}</span></p>
+      </div>
 
-      <h2>Customer</h2>
-      {customer ? (
-        <>
-          <p>{customer.name} ({customer.customer_id})</p>
-          <p>{customer.email} &middot; {customer.phone}</p>
-        </>
-      ) : (
-        <p>Customer details unavailable.</p>
-      )}
+      <div className="card">
+        <h2>Customer</h2>
+        {customer ? (
+          <>
+            <p>{customer.name} ({customer.customer_id})</p>
+            <p>{customer.email} &middot; {customer.phone}</p>
+          </>
+        ) : (
+          <p>Customer details unavailable.</p>
+        )}
+      </div>
 
-      <h2>Vehicle</h2>
-      {vehicle ? (
-        <>
-          <p>{vehicle.brand} {vehicle.model} ({vehicle.vehicle_id})</p>
-          <p>Registration: {vehicle.registration_number} &middot; Daily rate: {vehicle.daily_rate}</p>
-        </>
-      ) : (
-        <p>Vehicle details unavailable.</p>
-      )}
+      <div className="card">
+        <h2>Vehicle</h2>
+        {vehicle ? (
+          <>
+            <p>{vehicle.brand} {vehicle.model} ({vehicle.vehicle_id})</p>
+            <p>Registration: {vehicle.registration_number} &middot; Daily rate: {vehicle.daily_rate}</p>
+          </>
+        ) : (
+          <p>Vehicle details unavailable.</p>
+        )}
+      </div>
 
       <p><Link to="/rentals">Back to Rentals</Link></p>
     </div>
