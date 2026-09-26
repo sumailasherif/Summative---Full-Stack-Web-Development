@@ -185,3 +185,30 @@ nav a {
 nav a:hover {
   text-decoration: underline;
 }
+.dashboard-stats {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(160px, 1fr));
+  gap: 16px;
+}
+
+.stat-card {
+  background: #ffffff;
+  border: 1px solid #e2e8f0;
+  border-radius: 10px;
+  padding: 20px;
+  text-align: center;
+}
+
+.stat-card h2 {
+  margin: 0 0 4px;
+  font-size: 2rem;
+  color: #2563eb;
+}
+
+.stat-card p {
+  margin: 0;
+  color: #64748b;
+  font-size: 0.85rem;
+  text-transform: uppercase;
+  letter-spacing: 0.03em;
+}
