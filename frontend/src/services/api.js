@@ -111,6 +111,12 @@ export async function deleteVehicle(id) {
 }
 // ---------- Rentals ---------- to add Sherif
 
+// ---------- Dashboard ----------
 
-// ---------- Dashboard ---------- to add Sherif
-
+export async function getDashboardStats() {
+  const response = await fetch(`${BASE_URL}/dashboard/stats`);
+  if (!response.ok) {
+    throw new Error('Failed to fetch dashboard stats');
+  }
+  return response.json();
+}
